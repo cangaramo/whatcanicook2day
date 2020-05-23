@@ -19,5 +19,43 @@
       "whipped cream",
       "cream",
       "double cream"
+    ],
+    "vegetables": [
+      "onion",
+      "garlic",
+      "potatoes",
+      "spinach",
+      "bell pepper",
+      "carrots",
+      "avocado",
+      "broccoli",
+      "sweet potato",
+      "cucumber",
+      "mushroom",
+      "celery",
+      "courgettes",
+      "eggplant",
+      "cauliflower",
+      "squash",
+      "butternut squash",
+      "asparagus spears",
+      "leeks",
+      "artichokes",
+      "radishes",
+      "beets",
+      "green onions",
+      "arugula",
+      "ginger",
+      "corn"
+    ],
+    "fruits": [
+      "lemon",
+      "pineapple",
+      "apple",
+      "banana",
+      "orange",
+      "lime",
+      "berries",
+      "raisins"
     ]
 }
