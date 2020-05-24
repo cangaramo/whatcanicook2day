@@ -34,7 +34,7 @@ export default {
 .product {
     border: 1px solid #c06c84;
     //display: inline-block;
-    margin: 5px 6px;
+    margin: 5px 6px 5px 0px;
     padding: 3px 8px;
     border-radius: 8px;
     float: left;

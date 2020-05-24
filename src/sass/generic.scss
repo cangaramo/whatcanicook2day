@@ -10,16 +10,17 @@
     font-weight: 500;
 
     &:hover {
+        color: white;
         box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
     }
 }
 
-h2 {
+h1 {
     color: $purple;
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
+    font-size: 40px;
 }
-
 h4 {
     color: $purple;
     font-weight: 600;

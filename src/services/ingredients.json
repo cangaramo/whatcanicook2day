@@ -57,5 +57,112 @@
       "orange",
       "pineapple",
       "raisins"
+    ],
+    "meats": [
+      "bacon",
+      "beef",
+      "chicken breasts",
+      "chicken thighs",
+      "chicken wings",
+      "chicken drumsticks",
+      "chorizo sausage",
+      "ham",
+      "lamb",
+      "prosciutto",
+      "pork",
+      "sausage",
+      "turkey",
+      "whole chicken"
+    ],
+    "seafood": [
+      "crabmeat",
+      "cod",
+      "clams",
+      "fish",
+      "oysters",
+      "raw shrimp",
+      "sea scallops",
+      "salmon fillet",
+      "tuna"
+    ],
+    "grains": [
+      "basmati rice",
+      "brown rice",
+      "couscous",
+      "gnocchi",
+      "jasmine rice",
+      "lasagna noodles",
+      "pasta",
+      "penne",
+      "quinoa",
+      "rice",
+      "ramen noodles",
+      "spaghetti"
+    ],
+    "bakery": [
+      "bread",
+      "flour",
+      "hamburger buns",
+      "pita",
+      "puff pastry",
+      "sandwich bun",
+      "shortcrust pastry",
+      "tortilla",
+      "taco shells"
+    ],
+    "herbs": [
+      "bay leaves",
+      "coriander",
+      "dill",
+      "fresh basil",
+      "fresh thyme leaves",
+      "fennel",
+      "parsley",
+      "rosemary",
+      "sage"
+    ],
+    "legumes":[
+      "beans",
+      "black beans",
+      "chickpea",
+      "green beans",
+      "peas",
+      "red kidney beans",
+      "red lentils"
+    ],
+    "nuts": [
+      "almonds",
+      "hazelnuts",
+      "peanuts",
+      "pistachios",
+      "pine nuts",
+      "raw cashews",
+      "walnuts"
+    ],
+    "condiments": [
+      "bbq sauce",
+      "caesar dressing",
+      "gravy",
+      "ketchup",
+      "mayonnaise",
+      "mustard",
+      "pesto",
+      "ranch dressing",
+      "soy sauce",
+      "salad dressing",
+      "teriyaki sauce",
+      "tomato sauce"
+    ],
+    "spices": [
+      "ground cinnamon",
+      "ground cumin",
+      "ground mace",
+      "ground nutmeg",
+      "ground cloves",
+      "garlic powder",
+      "herbes de provence",
+      "oregano",
+      "paprika",
+      "vanilla essence"
     ]
 }

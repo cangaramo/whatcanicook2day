@@ -1,8 +1,5 @@
 <template>
     <div id="app">
-        <div id="nav">
-            <router-link to="/">Home</router-link>
-        </div>
         <router-view />
     </div>
 </template>
@@ -18,6 +15,9 @@
     color: #2c3e50;
 }
 
+body {
+  padding: 50px 0;
+}
 #nav {
     padding: 30px;
 
@@ -28,6 +28,16 @@
         &.router-link-exact-active {
             color: #42b983;
         }
+    }
+}
+
+@media (min-width: 1200px) {
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl {
+        max-width: 1250px;
     }
 }
 </style>

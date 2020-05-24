@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+        <div id="nav">
+            <router-link to="/">Home</router-link>
+        </div>
         <div class="row">
             <div
                 v-for="recipe in recipes"

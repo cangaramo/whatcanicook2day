@@ -2,45 +2,93 @@
     <div class="container">
         <div class="row">
             <div class="col-3 pr-0">
-                <h2>What's in your fridge?</h2>
+                <h1 class="mb-3">What can I cook today?</h1>
                 <p>
                     Select ingredients from different categories and find
-                    recipes based on what's in your fridge
+                    recipes based on what's in your fridge.
                 </p>
-                <button class="btn" @click="goToResults">Find recipe</button>
+                <button class="btn" @click="goToResults">
+                    Find recipe
+                </button>
             </div>
-            <div class="col-9 pl-5">
-                <!-- Ingredients selection -->
-                <div>
-                    <div class="category-group">
-                        <h4>Dairy</h4>
-                        <Ingredient
-                            v-for="product in ingredients.dairy"
-                            :key="product.id"
-                            :name="product"
+            <!-- Ingredients selection -->
+            <div class="col-8 offset-1 pl-0">
+                <div class="row">
+                    <div class="col-6 mb-4">
+                        <IngredientsGroup
+                            title="Dairy 🥛"
+                            :group="ingredients.dairy"
                             @productSelected="selectProduct($event)"
                         >
-                        </Ingredient>
+                        </IngredientsGroup>
+                        <IngredientsGroup
+                            title="Meat 🥩"
+                            :group="ingredients.meats"
+                            @productSelected="selectProduct($event)"
+                        >
+                        </IngredientsGroup>
+                        <IngredientsGroup
+                            title="Seafood 🐟"
+                            :group="ingredients.seafood"
+                            @productSelected="selectProduct($event)"
+                        >
+                        </IngredientsGroup>
+                        <IngredientsGroup
+                            title="Bakery 🍞"
+                            :group="ingredients.bakery"
+                            @productSelected="selectProduct($event)"
+                        >
+                        </IngredientsGroup>
+                        <IngredientsGroup
+                            title="Legumes"
+                            :group="ingredients.legumes"
+                            @productSelected="selectProduct($event)"
+                        >
+                        </IngredientsGroup>
+                        <IngredientsGroup
+                            title="Spices 🧂"
+                            :group="ingredients.spices"
+                            @productSelected="selectProduct($event)"
+                        >
+                        </IngredientsGroup>
                     </div>
-                    <div class="category-group">
-                        <h4>Vegetables</h4>
-                        <Ingredient
-                            v-for="product in ingredients.vegetables"
-                            :key="product.id"
-                            :name="product"
+                    <div class="col-6">
+                        <IngredientsGroup
+                            title="Vegetables 🥦"
+                            :group="ingredients.vegetables"
                             @productSelected="selectProduct($event)"
                         >
-                        </Ingredient>
-                    </div>
-                    <div class="category-group">
-                        <h4>Fruits</h4>
-                        <Ingredient
-                            v-for="product in ingredients.fruits"
-                            :key="product.id"
-                            :name="product"
+                        </IngredientsGroup>
+                        <IngredientsGroup
+                            title="Rice and pasta 🍚"
+                            :group="ingredients.grains"
                             @productSelected="selectProduct($event)"
                         >
-                        </Ingredient>
+                        </IngredientsGroup>
+                        <IngredientsGroup
+                            title="Fruits 🍐"
+                            :group="ingredients.fruits"
+                            @productSelected="selectProduct($event)"
+                        >
+                        </IngredientsGroup>
+                        <IngredientsGroup
+                            title="Herbs 🌿"
+                            :group="ingredients.herbs"
+                            @productSelected="selectProduct($event)"
+                        >
+                        </IngredientsGroup>
+                        <IngredientsGroup
+                            title="Nuts 🥜"
+                            :group="ingredients.nuts"
+                            @productSelected="selectProduct($event)"
+                        >
+                        </IngredientsGroup>
+                        <IngredientsGroup
+                            title="Condiments 🥫"
+                            :group="ingredients.condiments"
+                            @productSelected="selectProduct($event)"
+                        >
+                        </IngredientsGroup>
                     </div>
                 </div>
             </div>
@@ -51,7 +99,7 @@
 
 <script>
 import IngredientsService from '@/services/IngredientsService.js'
-import Ingredient from '@/components/Ingredient'
+import IngredientsGroup from '@/components/IngredientsGroup'
 
 export default {
     data() {
@@ -64,7 +112,7 @@ export default {
         this.fetchIngredients()
     },
     components: {
-        Ingredient
+        IngredientsGroup
     },
     methods: {
         fetchIngredients() {
@@ -90,22 +138,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@media (min-width: 1200px) {
-    .container,
-    .container-lg,
-    .container-md,
-    .container-sm,
-    .container-xl {
-        max-width: 1300px;
-    }
-}
-.category-group {
-    display: inline-block;
-    width: 100%;
-    margin-top: 30px;
 
-    &:first-child {
-        margin-top: 0;
-    }
-}
 </style>
