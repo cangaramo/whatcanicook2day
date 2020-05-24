@@ -32,14 +32,21 @@ export default {
 
 <style lang="scss">
 .product {
-    border: 1px solid #47a591;
-    display: inline-block;
+    border: 1px solid #c06c84;
+    //display: inline-block;
     margin: 5px 6px;
     padding: 3px 8px;
     border-radius: 8px;
+    float: left;
     cursor: pointer;
+    &:hover {
+        background: #deaab8;
+        border: 1px solid #deaab8;
+        color: white;
+    }
     &.active {
-        background: #47a591;
+        background: #c06c84;
+        border: 1px solid #c06c84;
         color: white;
     }
 }

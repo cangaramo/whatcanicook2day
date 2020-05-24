@@ -1,35 +1,46 @@
 <template>
     <div class="container">
-        <h2>What's in your fridge?</h2>
-        <!-- Ingredients selection -->
-        <div class="mb-4">
-            <h4>Dairy</h4>
-            <Ingredient
-                v-for="product in ingredients.dairy"
-                :key="product.id"
-                :name="product"
-                @productSelected="selectProduct($event)"
-            >
-            </Ingredient>
-            <h4>Vegetables</h4>
-            <Ingredient
-                v-for="product in ingredients.vegetables"
-                :key="product.id"
-                :name="product"
-                @productSelected="selectProduct($event)"
-            >
-            </Ingredient>
-            <h4>Fruits</h4>
-            <Ingredient
-                v-for="product in ingredients.fruits"
-                :key="product.id"
-                :name="product"
-                @productSelected="selectProduct($event)"
-            >
-            </Ingredient>
+        <div class="row">
+            <div class="col-3">
+                <h2>What's in your fridge?</h2>
+                <button @click="findRecipes">Find recipe</button>
+            </div>
+            <div class="col-9">
+                <!-- Ingredients selection -->
+                <div class="mb-4">
+                    <div class="d-inline-block w-100">
+                        <h4 class="text-left">Dairy</h4>
+                        <Ingredient
+                            v-for="product in ingredients.dairy"
+                            :key="product.id"
+                            :name="product"
+                            @productSelected="selectProduct($event)"
+                        >
+                        </Ingredient>
+                    </div>
+                    <div class="d-inline-block w-100">
+                        <h4 class="text-left">Vegetables</h4>
+                        <Ingredient
+                            v-for="product in ingredients.vegetables"
+                            :key="product.id"
+                            :name="product"
+                            @productSelected="selectProduct($event)"
+                        >
+                        </Ingredient>
+                    </div>
+                    <div class="d-inline-block w-100">
+                        <h4 class="text-left">Fruits</h4>
+                        <Ingredient
+                            v-for="product in ingredients.fruits"
+                            :key="product.id"
+                            :name="product"
+                            @productSelected="selectProduct($event)"
+                        >
+                        </Ingredient>
+                    </div>
+                </div>
+            </div>
         </div>
-        <button @click="findRecipes">Find recipe</button>
-
         <h2 class="mt-4">Results</h2>
         <div class="row">
             <div
@@ -46,8 +57,8 @@
                     <div class="col-7">
                         <!-- Missing ingredients -->
                         <p class="subtitle mt-0 mb-1">
-                            <i class="fas fa-exclamation missed mr-2"></i>Missing
-                            ingredients:
+                            <i class="fas fa-exclamation missed mr-2"></i
+                            >Missing ingredients:
                         </p>
                         <div
                             class="item-ing missing mb-1"
@@ -58,7 +69,8 @@
                         </div>
                         <!-- Used ingredients -->
                         <p class="subtitle mt-2 mb-1">
-                            <i class="fas fa-check used mr-1"></i> Used ingredients
+                            <i class="fas fa-check used mr-1"></i> Used
+                            ingredients
                         </p>
                         <p
                             class="item-ing used  mb-1"
@@ -141,7 +153,8 @@ export default {
 <style lang="scss">
 h4 {
     margin-top: 20px;
-    color: #d9455f;
+    color: #424874;
+    font-weight: 600;
 }
 .recipe {
     position: relative;
@@ -201,5 +214,4 @@ h4 {
         }
     }
 }
-
 </style>
