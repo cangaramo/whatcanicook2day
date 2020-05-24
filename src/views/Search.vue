@@ -14,7 +14,7 @@
             <!-- Ingredients selection -->
             <div class="col-8 offset-1 pl-0">
                 <div class="row">
-                    <div class="col-6 mb-4">
+                    <div class="col-6">
                         <IngredientsGroup
                             title="Dairy 🥛"
                             :group="ingredients.dairy"

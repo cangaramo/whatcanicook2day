@@ -6,8 +6,11 @@
                 Go back
             </router-link>
         </div>
-        <h1>Recipes</h1>
-        <h5>With carrot, yogurt</h5>
+        <div class="title-results">
+            <h1>Recipes</h1>
+            <p class="results">· 10 results</p>
+            <p class="showing">Showing recipes with {{ this.nice_query}}</p>
+        </div>
         <div class="row">
             <div
                 v-for="recipe in recipes"
@@ -73,7 +76,8 @@ export default {
     },
     data() {
         return {
-            recipes: {}
+            recipes: {},
+            nice_query: ''
         }
     },
     methods: {
@@ -93,6 +97,7 @@ export default {
     created() {
         if (this.query) {
             //this.findRecipes()
+            this.nice_query = this.query.replace(',+', ', ')
             this.findRecipes2()
         } else {
             console.log('empty query')
@@ -103,6 +108,28 @@ export default {
 
 <style lang="scss">
 @import '@/sass/variables.scss';
+
+.title-results {
+    margin-top: 30px;
+    h1 {
+        margin: 0;
+        display: inline-block;
+    }
+    .results {
+        display: inline-block;
+        font-weight: 600;
+        font-size: 20px;
+        margin-bottom: 0;
+        margin-left: 15px;
+        vertical-align: super;
+        color: $pink;
+    }
+    .showing {
+        margin-top: 12px;
+        font-size: 17px;
+    }
+}
+
 .recipe {
     position: relative;
     margin: 30px 0;
