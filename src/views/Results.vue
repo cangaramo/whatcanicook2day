@@ -1,51 +1,57 @@
 <template>
     <div class="container">
-        <div id="nav">
-            <router-link to="/">Home</router-link>
+        <div class="breadcrumb">
+            <router-link to="/">
+                <i class="fas fa-arrow-left mr-1"></i>
+                Go back
+            </router-link>
         </div>
+        <h1>Recipes</h1>
+        <h5>With carrot, yogurt</h5>
         <div class="row">
             <div
                 v-for="recipe in recipes"
                 :key="recipe.id"
-                class="recipe  text-left col-6 my-4 py-1"
+                class="col-6 recipe"
             >
-                <h5 class="mb-3">{{ recipe.title }}</h5>
-                <div class="row ">
+                <h5>{{ recipe.title }}</h5>
+                <div class="row mt-3">
                     <div class="col-5">
-                        <img class="w-100" :src="recipe.image" />
-                        <button class="btn mt-3">Read more</button>
+                        <img class="picture" :src="recipe.image" />
+                        <button class="btn">Read more</button>
                     </div>
                     <div class="col-7">
                         <!-- Missing ingredients -->
-                        <p class="subtitle mt-0 mb-1">
-                            <i class="fas fa-exclamation missed mr-2"></i
-                            >Missing ingredients:
+                        <p class="subtitle">
+                            <i class="fas fa-exclamation missed mr-2"></i>
+                            Missing ingredients:
                         </p>
                         <div
-                            class="item-ing missing mb-1"
+                            class="item-ingredient missing"
                             v-for="missing in recipe.missedIngredients"
                             :key="missing.id"
                         >
                             {{ missing.name }}
                         </div>
                         <!-- Used ingredients -->
-                        <p class="subtitle mt-2 mb-1">
-                            <i class="fas fa-check used mr-1"></i> Used
-                            ingredients
+                        <p class="subtitle">
+                            <i class="fas fa-check used mr-1"></i>
+                            Used ingredients
                         </p>
                         <p
-                            class="item-ing used  mb-1"
+                            class="item-ingredient used"
                             v-for="used in recipe.usedIngredients"
                             :key="used.id"
                         >
                             {{ used.name }}
                         </p>
                         <!-- Unused ingredients -->
-                        <p class="subtitle mt-2 mb-1">
-                            <i class="fas fa-times mr-2"></i>Unused ingredients
+                        <p class="subtitle">
+                            <i class="fas fa-times mr-2"></i>
+                            Unused ingredients
                         </p>
                         <div
-                            class="item-ing  mb-1"
+                            class="item-ingredient"
                             v-for="unused in recipe.unusedIngredients"
                             :key="unused.id"
                         >
@@ -85,7 +91,6 @@ export default {
         }
     },
     created() {
-        console.log('hila')
         if (this.query) {
             //this.findRecipes()
             this.findRecipes2()
@@ -97,50 +102,51 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/sass/variables.scss';
 .recipe {
     position: relative;
+    margin: 30px 0;
 
     .btn {
-        bottom: 0;
-        left: 15px;
-        position: absolute;
-        font-size: 13px;
+        margin-top: 20px;
+        font-size: 14px;
     }
-
     .subtitle {
         font-size: 14px;
         font-weight: 500;
-
+        margin-bottom: 6px;
+        margin-top: 10px;
+        &:first-child {
+            margin-top: 0;
+        }
         .used {
-            color: #47a591;
+            color: $success;
         }
-
         .missed {
-            color: #f77268;
+            color: $error;
         }
     }
-    img {
+    .picture {
         border-radius: 20px;
+        width: 100%;
     }
-
-    .item-ing {
+    .item-ingredient {
         display: inline-block;
         margin-right: 5px;
         padding: 3px 8px;
         border-radius: 8px;
         font-size: 13px;
         border: 1px solid black;
-
+        margin-bottom: 6px;
         &.used {
-            border: 1px solid #47a591;
+            border: 1px solid $success;
 
             .fas {
-                color: #47a591;
+                color: $success;
             }
         }
-
         &.missing {
-            border: 1px solid #f77268;
+            border: 1px solid $error;
         }
     }
 }
