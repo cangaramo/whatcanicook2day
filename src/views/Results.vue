@@ -3,13 +3,13 @@
         <div class="breadcrumb">
             <router-link to="/">
                 <i class="fas fa-arrow-left mr-1"></i>
-                Go back
+                Home
             </router-link>
         </div>
         <div class="title-results">
             <h1>Recipes</h1>
             <p class="results">· 10 results</p>
-            <p class="showing">Showing recipes with {{ this.nice_query}}</p>
+            <p class="showing">Showing recipes with {{ this.nice_query }}</p>
         </div>
         <div class="row">
             <div
@@ -21,7 +21,15 @@
                 <div class="row mt-3">
                     <div class="col-5">
                         <img class="picture" :src="recipe.image" />
-                        <button class="btn">Read more</button>
+                        <router-link
+                            tag="button"
+                            class="btn"
+                            :to="{
+                                name: 'Recipe',
+                                params: { id: recipe.id.toString() }
+                            }"
+                            >Read more</router-link
+                        >
                     </div>
                     <div class="col-7">
                         <!-- Missing ingredients -->
@@ -82,7 +90,8 @@ export default {
     },
     methods: {
         findRecipes2() {
-            this.recipes = IngredientsService.getRecipes()
+            this.recipes = IngredientsService.getRecipes().results
+            console.log(this.recipes)
         },
         findRecipes() {
             RecipesService.findByIngredients(this.query)

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Search from '../views/Search.vue'
 import Results from '../views/Results.vue'
+import Recipe from '../views/Recipe.vue'
 
 Vue.use(VueRouter)
 
@@ -21,9 +22,15 @@ const routes = [
             import(/* webpackChunkName: "about" */ '../views/About.vue')
     },
     {
-        path: '/results',
+        path: '/results/:query',
         name: 'Results',
         component: Results,
+        props: true
+    },
+    {
+        path: '/recipe/:id',
+        name: 'Recipe',
+        component: Recipe,
         props: true
     }
 ]

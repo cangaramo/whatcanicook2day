@@ -48,6 +48,17 @@ h5 {
     color: $purple;
 }
 
+// Hyperlinks
+a {
+    color: $pink;
+    border-bottom: 1px solid transparent;
+    &:hover {
+        text-decoration: none;
+        color: $pink;
+        border-bottom: 1px solid $pink;
+    }
+}
+
 // Button
 .btn {
     background: $purple;
