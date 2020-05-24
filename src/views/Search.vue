@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-3">
                 <h2>What's in your fridge?</h2>
-                <button @click="findRecipes">Find recipe</button>
+                <button class="btn" @click="findRecipes">Find recipe</button>
             </div>
             <div class="col-9">
                 <!-- Ingredients selection -->
@@ -18,7 +18,7 @@
                         >
                         </Ingredient>
                     </div>
-                    <div class="d-inline-block w-100">
+                    <div class="d-inline-block w-100 mt-4">
                         <h4 class="text-left">Vegetables</h4>
                         <Ingredient
                             v-for="product in ingredients.vegetables"
@@ -28,7 +28,7 @@
                         >
                         </Ingredient>
                     </div>
-                    <div class="d-inline-block w-100">
+                    <div class="d-inline-block w-100 mt-4">
                         <h4 class="text-left">Fruits</h4>
                         <Ingredient
                             v-for="product in ingredients.fruits"
@@ -52,7 +52,7 @@
                 <div class="row ">
                     <div class="col-5">
                         <img class="w-100" :src="recipe.image" />
-                        <button class="mt-3">Read more</button>
+                        <button class="btn mt-3">Read more</button>
                     </div>
                     <div class="col-7">
                         <!-- Missing ingredients -->
@@ -151,29 +151,13 @@ export default {
 </script>
 
 <style lang="scss">
-h4 {
-    margin-top: 20px;
-    color: #424874;
-    font-weight: 600;
-}
 .recipe {
     position: relative;
-    h5 {
-        font-weight: 700;
-        color: #424874;
-    }
 
-    button {
-        background: #424874;
-        color: white;
-        border-radius: 15px;
-        padding: 7px 18px;
+    .btn {
         bottom: 0;
         left: 15px;
-        font-weight: 500;
-        font-size: 15px;
         position: absolute;
-        font-weight: 500;
         font-size: 13px;
     }
 

@@ -1,0 +1,25 @@
+@import '@/sass/variables.scss';
+
+.btn {
+    background: $purple;
+    color: white;
+    border-radius: 15px;
+    padding: 7px 18px;
+    font-weight: 500;
+    font-size: 16px;
+    font-weight: 500;
+
+    &:hover {
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
+}
+
+h5 {
+    font-weight: 700;
+    color: #424874;
+}
+
+h4 {
+    color: #424874;
+    font-weight: 600;
+}
