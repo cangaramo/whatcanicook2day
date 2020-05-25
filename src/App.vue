@@ -1,9 +1,20 @@
 <template>
     <div id="app">
-        <router-view />
+        <main>
+            <router-view />
+        </main>
+        <MyFooter></MyFooter>
     </div>
 </template>
 
+<script>
+import Footer from '@/components/Footer.vue'
+export default {
+    components: {
+        MyFooter: Footer
+    }
+}
+</script>
 <style lang="scss">
 @import '@/sass/generic.scss';
 
