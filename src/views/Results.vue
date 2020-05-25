@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container results">
         <div class="breadcrumb">
             <router-link to="/">
                 <i class="fas fa-arrow-left mr-1"></i>
@@ -8,83 +8,87 @@
         </div>
         <div class="title-results">
             <h1>Recipes</h1>
-            <p class="results">· 10 results</p>
+            <p class="total">· {{ totalResults }} results</p>
             <p class="showing">Showing recipes with {{ this.nice_query }}</p>
         </div>
-        <!-- Results -->
-        <div class="row">
-            <div
-                v-for="recipe in recipes"
-                :key="recipe.id"
-                class="col-6 recipe"
-            >
-                <h5>{{ recipe.title }}</h5>
-                <div class="row mt-3">
-                    <div class="col-5">
-                        <img class="picture" :src="recipe.image" />
-                        <router-link
-                            tag="button"
-                            class="btn"
-                            :to="{
-                                name: 'Recipe',
-                                params: { id: recipe.id.toString() }
-                            }"
-                            >Read more</router-link
-                        >
-                    </div>
-                    <div class="col-7">
-                        <!-- Missing ingredients -->
-                        <p class="subtitle">
-                            <i class="fas fa-exclamation missed mr-2"></i>
-                            Missing ingredients:
-                        </p>
-                        <div
-                            class="item-ingredient missing"
-                            v-for="missing in recipe.missedIngredients"
-                            :key="recipe.id + missing.id"
-                        >
-                            {{ missing.name }}
-                        </div>
-                        <!-- Used ingredients -->
-                        <p class="subtitle">
-                            <i class="fas fa-check used mr-1"></i>
-                            Used ingredients
-                        </p>
-                        <p
-                            class="item-ingredient used"
-                            v-for="used in recipe.usedIngredients"
-                            :key="recipe.id + used.id"
-                        >
-                            {{ used.name }}
-                        </p>
-                        <!-- Unused ingredients -->
-                        <p class="subtitle">
-                            <i class="fas fa-times mr-2"></i>
-                            Unused ingredients
-                        </p>
-                        <div
-                            class="item-ingredient"
-                            v-for="unused in recipe.unusedIngredients"
-                            :key="recipe.id + unused.id"
-                        >
-                            {{ unused.name }}
+        <div v-if="!loaded">
+            <Loader></Loader>
+        </div>
+        <div v-show="loaded">
+            <div class="mt-4" v-if="totalResults == 0">
+                <h4>No results found</h4>
+            </div>
+            <div v-else>
+                <!-- Results -->
+                <div class="row">
+                    <div
+                        v-for="recipe in recipes"
+                        :key="recipe.id"
+                        class="col-6 recipe"
+                    >
+                        <h5>{{ recipe.title }}</h5>
+                        <div class="row mt-3">
+                            <div class="col-5">
+                                <img class="picture" :src="recipe.image" />
+                                <router-link
+                                    tag="button"
+                                    class="btn"
+                                    :to="{
+                                        name: 'Recipe',
+                                        params: { id: recipe.id.toString() }
+                                    }"
+                                    >Read more</router-link
+                                >
+                            </div>
+                            <div class="col-7">
+                                <!-- Missing ingredients -->
+                                <p class="subtitle">
+                                    <i
+                                        class="fas fa-exclamation missed mr-2"
+                                    ></i>
+                                    Missing ingredients:
+                                </p>
+                                <div
+                                    class="item-ingredient missing"
+                                    v-for="missing in recipe.missedIngredients"
+                                    :key="recipe.id + missing.id"
+                                >
+                                    {{ missing.name }}
+                                </div>
+                                <!-- Used ingredients -->
+                                <p class="subtitle">
+                                    <i class="fas fa-check used mr-1"></i>
+                                    Used ingredients
+                                </p>
+                                <p
+                                    class="item-ingredient used"
+                                    v-for="used in recipe.usedIngredients"
+                                    :key="recipe.id + used.id"
+                                >
+                                    {{ used.name }}
+                                </p>
+                                <!-- Unused ingredients -->
+                                <p class="subtitle">
+                                    <i class="fas fa-times mr-2"></i>
+                                    Unused ingredients
+                                </p>
+                                <div
+                                    class="item-ingredient"
+                                    v-for="unused in recipe.unusedIngredients"
+                                    :key="recipe.id + unused.id"
+                                >
+                                    {{ unused.name }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!-- Pagination -->
+                <Pagination
+                    :pages="getPages"
+                    @updatePage="updatePage($event)"
+                ></Pagination>
             </div>
-        </div>
-        <!-- Pagination -->
-        <div class="pagination mt-5">
-            <button class="changePage" @click="previousPage"><i class="fas fa-chevron-left"></i></button>
-            <button
-                v-for="page in getPages"
-                :key="page"
-                @click="changePage(page)"
-                :class="[{ active: current_page == page }, 'page']"
-            >
-                {{ page }}
-            </button>
-            <button class="changePage" @click="nextPage"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 </template>
@@ -92,6 +96,9 @@
 <script>
 import RecipesService from '@/services/RecipesService.js'
 import IngredientsService from '@/services/IngredientsService.js'
+import ResultsPagination from '@/components/ResultsPagination'
+import Loader from '@/components/Loader'
+
 export default {
     props: {
         query: String
@@ -101,79 +108,66 @@ export default {
             recipes: {},
             nice_query: '',
             offset: 0,
-            current_page: 3,
-            total: 4
+            loaded: false,
+            totalResults: null
         }
+    },
+    components: {
+        Pagination: ResultsPagination,
+        Loader: Loader
     },
     computed: {
         getPages() {
-            var pages = []
-            var first
-            var last
-            if (this.total > 5) {
-                if (this.current_page == 1) {
-                    // First
-                    first = 1
-                    last = 5
-                } else if (this.current_page == 2) {
-                    //Second
-                    first = 2
-                    last = 6
-                } else if (this.current_page == this.total) {
-                    // Last
-                    first = this.current_page - 4
-                    last = this.current_page
-                } else if (this.current_page == this.total - 1) {
-                    // Second to last
-                    first = this.current_page - 3
-                    last = this.current_page + 1
-                } else {
-                    // Rest
-                    first = this.current_page - 2
-                    last = this.current_page + 2
-                }
+            var pages
+            if (this.totalResults % 10) {
+                pages = parseInt(this.totalResults / 10)
             } else {
-                //Less than 5 pages
-                first = 1
-                last = this.total
-            }
-            for (let i = first; i <= last; i++) {
-                pages.push(i)
+                pages = parseInt(this.totalResults / 10) + 1
             }
             return pages
         }
     },
     methods: {
-        previousPage() {
-            this.current_page -= 1
-            //Do something
+        clearData() {
+            this.loaded = false
+            this.scrollToTop()
         },
-        nextPage() {
-            this.current_page += 1
-            //Do something
+        updatePage(current_page) {
+            this.offset = (current_page - 1) * 10
+            this.clearData()
+            //this.findRecipes2()
+            this.findRecipes()
         },
-        changePage(page) {
-            this.current_page = page
-            //Do something
+        scrollToTop() {
+            window.scrollTo(0, 0)
         },
         findRecipes2() {
-            this.recipes = IngredientsService.getRecipes().results
+            setTimeout(() => {
+                this.totalResults = IngredientsService.getRecipes().totalResults
+                this.recipes = IngredientsService.getRecipes().results
+                this.loaded = true
+            }, 1000)
         },
         findRecipes() {
             RecipesService.findByIngredients(this.query, this.offset)
                 .then(response => {
+                    this.totalResults = response.data.totalResults
                     this.recipes = response.data.results
+                    setTimeout(() => {
+                        this.loaded = true
+                    }, 500)
                 })
                 .catch(error => {
                     console.log('There was an error ' + error)
+                    this.loaded = true
                 })
         }
     },
     created() {
         if (this.query) {
-            //this.findRecipes()
+            this.findRecipes()
             this.nice_query = this.query.replace(',+', ', ')
-            this.findRecipes2()
+            //this.findRecipes2()
         } else {
             console.log('empty query')
         }
@@ -184,40 +178,8 @@ export default {
 <style lang="scss">
 @import '@/sass/variables.scss';
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    button {
-        border-radius: 5px;
-        border: 1px solid #e0e0e0;
-        color: $purple;
-        height: 30px;
-        width: 30px;
-        text-align: center;
-        margin: 0 4px;
-        &:hover {
-            background: $light_pink;
-            border: 1px solid $light_pink;
-            color: white;
-        }
-        &:focus {
-            outline: none;
-        }
-    }
-    .changePage {
-        i {
-            margin-top: 5px;
-        }
-    }
-    .page {
-        font-size: 14px;
-        &.active {
-            border: 1px solid $pink;
-            color: white;
-            background: $pink;
-            box-shadow: 0px 0px 3px 0px #c06c84;
-        }
-    }
+.results {
+    min-height: 90vh;
 }
 
 .title-results {
@@ -226,7 +188,7 @@ export default {
         margin: 0;
         display: inline-block;
     }
-    .results {
+    .total {
         display: inline-block;
         font-weight: 600;
         font-size: 20px;
