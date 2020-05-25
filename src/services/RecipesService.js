@@ -8,15 +8,26 @@ const apiClient = axios.create({
         Accept: 'application/json',
         'Content-Type': 'application/json'
     }
-    // query
+    // old query
     //https://api.spoonacular.com/recipes/findByIngredients?ingredients=apples&apiKey=d4308995a2ae43578da556983599118e
 })
 
-const apiKey = 'apiKey=d4308995a2ae43578da556983599118e'
+const apiKey = 'd4308995a2ae43578da556983599118e'
 export default {
-    findByIngredients(query) {
+    // findByIngredients(query) {
+    //     return apiClient.get(
+    //         '/recipes/findByIngredients?ingredients=' + query + '&' + apiKey
+    //     )
+    // },
+    findByIngredients(query, offset) {
         return apiClient.get(
-            '/recipes/findByIngredients?ingredients=' + query + '&' + apiKey
+            //'/recipes/findByIngredients?ingredients=' + query + '&' + apiKey
+            'https://api.spoonacular.com/recipes/complexSearch' +
+                '?includeIngredients=' + query +
+                '&fillIngredients=true' +
+                '&instructionsRequired=true' +
+                '&offset=' + offset +
+                '&apiKey=' + apiKey
         )
     }
 }
