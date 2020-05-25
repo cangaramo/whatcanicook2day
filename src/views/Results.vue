@@ -11,6 +11,7 @@
             <p class="results">· 10 results</p>
             <p class="showing">Showing recipes with {{ this.nice_query }}</p>
         </div>
+        <!-- Results -->
         <div class="row">
             <div
                 v-for="recipe in recipes"
@@ -40,7 +41,7 @@
                         <div
                             class="item-ingredient missing"
                             v-for="missing in recipe.missedIngredients"
-                            :key="missing.id"
+                            :key="recipe.id + missing.id"
                         >
                             {{ missing.name }}
                         </div>
@@ -52,7 +53,7 @@
                         <p
                             class="item-ingredient used"
                             v-for="used in recipe.usedIngredients"
-                            :key="used.id"
+                            :key="recipe.id + used.id"
                         >
                             {{ used.name }}
                         </p>
@@ -64,13 +65,26 @@
                         <div
                             class="item-ingredient"
                             v-for="unused in recipe.unusedIngredients"
-                            :key="unused.id"
+                            :key="recipe.id + unused.id"
                         >
                             {{ unused.name }}
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- Pagination -->
+        <div class="pagination mt-5">
+            <button class="changePage" @click="previousPage"><i class="fas fa-chevron-left"></i></button>
+            <button
+                v-for="page in getPages"
+                :key="page"
+                @click="changePage(page)"
+                :class="[{ active: current_page == page }, 'page']"
+            >
+                {{ page }}
+            </button>
+            <button class="changePage" @click="nextPage"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 </template>
@@ -85,18 +99,70 @@ export default {
     data() {
         return {
             recipes: {},
-            nice_query: ''
+            nice_query: '',
+            offset: 0,
+            current_page: 3,
+            total: 4
+        }
+    },
+    computed: {
+        getPages() {
+            var pages = []
+            var first
+            var last
+            if (this.total > 5) {
+                if (this.current_page == 1) {
+                    // First
+                    first = 1
+                    last = 5
+                } else if (this.current_page == 2) {
+                    //Second
+                    first = 2
+                    last = 6
+                } else if (this.current_page == this.total) {
+                    // Last
+                    first = this.current_page - 4
+                    last = this.current_page
+                } else if (this.current_page == this.total - 1) {
+                    // Second to last
+                    first = this.current_page - 3
+                    last = this.current_page + 1
+                } else {
+                    // Rest
+                    first = this.current_page - 2
+                    last = this.current_page + 2
+                }
+            } else {
+                //Less than 5 pages
+                first = 1
+                last = this.total
+            }
+            for (let i = first; i <= last; i++) {
+                pages.push(i)
+            }
+            return pages
         }
     },
     methods: {
+        previousPage() {
+            this.current_page -= 1
+            //Do something
+        },
+        nextPage() {
+            this.current_page += 1
+            //Do something
+        },
+        changePage(page) {
+            this.current_page = page
+            //Do something
+        },
         findRecipes2() {
             this.recipes = IngredientsService.getRecipes().results
-            console.log(this.recipes)
         },
         findRecipes() {
-            RecipesService.findByIngredients(this.query)
+            RecipesService.findByIngredients(this.query, this.offset)
                 .then(response => {
-                    this.recipes = response.data
+                    this.recipes = response.data.results
                 })
                 .catch(error => {
                     console.log('There was an error ' + error)
@@ -117,6 +183,42 @@ export default {
 
 <style lang="scss">
 @import '@/sass/variables.scss';
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    button {
+        border-radius: 5px;
+        border: 1px solid #e0e0e0;
+        color: $purple;
+        height: 30px;
+        width: 30px;
+        text-align: center;
+        margin: 0 4px;
+        &:hover {
+            background: $light_pink;
+            border: 1px solid $light_pink;
+            color: white;
+        }
+        &:focus {
+            outline: none;
+        }
+    }
+    .changePage {
+        i {
+            margin-top: 5px;
+        }
+    }
+    .page {
+        font-size: 14px;
+        &.active {
+            border: 1px solid $pink;
+            color: white;
+            background: $pink;
+            box-shadow: 0px 0px 3px 0px #c06c84;
+        }
+    }
+}
 
 .title-results {
     margin-top: 30px;
