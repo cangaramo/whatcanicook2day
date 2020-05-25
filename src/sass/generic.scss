@@ -59,6 +59,10 @@ a {
     }
 }
 
+.plain:hover {
+    border: none;
+}
+
 // Button
 .btn {
     background: $purple;

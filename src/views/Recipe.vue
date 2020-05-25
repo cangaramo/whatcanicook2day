@@ -2,9 +2,12 @@
     <div class="single-recipe">
         <div class="container pb-5">
             <div class="breadcrumb">
-                <router-link to="/">
-                    <i class="fas fa-arrow-left mr-1"></i>
-                    Home
+                <router-link to="/" class="plain">
+                Home
+                </router-link>
+                <i class="mx-2 px-1 mt-1 fas fa-arrow-left"></i>
+                <router-link to="/" class="plain">
+                Recipes
                 </router-link>
             </div>
             <div class="row">
@@ -13,16 +16,32 @@
                     <h1>{{ recipe.title }}</h1>
                     <div class="numbers">
                         <div class="number">
-                            <p>{{ recipe.readyInMinutes }}<i class="ml-1 mb-1 fas fa-clock"></i></p>
+                            <p>
+                                {{ recipe.readyInMinutes
+                                }}<i class="ml-1 mb-1 fas fa-clock"></i>
+                            </p>
                             <p>minutes</p>
                         </div>
                         <div class="number">
-                            <p>{{ recipe.servings }}<i class="ml-1 fas fa-user"></i></p>
+                            <p>
+                                {{ recipe.servings
+                                }}<i class="ml-1 fas fa-user"></i>
+                            </p>
                             <p>servings</p>
                         </div>
                         <div class="number">
-                            <p>{{ recipe.healthScore }}<i class="ml-1 fas fa-heartbeat"></i></p>
+                            <p>
+                                {{ recipe.healthScore
+                                }}<i class="ml-1 fas fa-plus"></i>
+                            </p>
                             <p>health score</p>
+                        </div>
+                        <div class="number">
+                            <p>
+                                {{ recipe.aggregateLikes
+                                }}<i class="ml-1 fas fa-heart"></i>
+                            </p>
+                            <p>likes</p>
                         </div>
                     </div>
                     <h4 class="my-4">Summary</h4>
@@ -34,11 +53,11 @@
                 <!-- Ingredients -->
             </div>
         </div>
-        <div style="background: #f3f3f9">
-            <div class="container">
+        <div class="py-4" style="background: #f3f3f9">
+            <div class="container my-2">
                 <div class="row">
                     <div class="col-6">
-                        <h4 class="my-4">Ingredients</h4>
+                        <h4 class="mb-4">Ingredients</h4>
                         <div
                             v-for="ingredient in recipe.extendedIngredients"
                             :key="ingredient.id"
@@ -55,11 +74,13 @@
                                 <p class="name">
                                     {{ capitaLizeLetter(ingredient.name) }}
                                 </p>
-                                <p class="description">{{ ingredient.original }}</p>
+                                <p class="description">
+                                    {{ ingredient.original }}
+                                </p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-5 offset-1">
                         <h4 class="my-4">Equipment</h4>
                         <div
                             v-for="equipment in getEquipments"
@@ -82,33 +103,68 @@
                     </div>
                 </div>
 
+                <!--
                 <p>Link {{ recipe.sourceName }}: {{ recipe.sourceUrl }}</p>
-
-                <p>Vn: {{ recipe.vegan }}</p>
-                <p>V: {{ recipe.vegetarian }}</p>
-                <p>G: {{ recipe.glutenFree }}</p>
-                <p>D: {{ recipe.dairyFree }}</p>
 
                 {{ this.id }}
 
-                <br /><br />
+                <br /><br /> -->
             </div>
         </div>
         <div class="container">
             <div class="row">
-                <div v-for="(step, j) in recipe.analyzedInstructions[0].steps" :key="`s-${j}`">
-                    <div style="border-left: 1px solid gray">
-                        <div style="width: 20px; height: 20px; border-radius: 50%; background: blue; margin-left: -10px">
-                            <p class="mb-0">{{ step.number }}</p>
+                <div class="col-6">
+                    <h4 class="my-4">Instructions</h4>
+                    <div
+                        class="instructions"
+                        v-for="step in recipe.analyzedInstructions[0].steps"
+                        :key="step.number"
+                    >
+                        <div class="step">
+                            <div class="number">
+                                <p class="mb-0">{{ step.number }}</p>
+                            </div>
+                            <div class="information">
+                                <p class="mb-0">{{ step.step }}</p>
+                            </div>
                         </div>
-                        <div style="position: relative; left: 30px; top: -20px">
-                            <p class="mb-0">{{ step.step }}</p>
-                        </div>
+                        <!-- 
+                        
+                        <p>Ingredients: {{ step.ingredients }}</p>
+                        <br /><br /> -->
                     </div>
-                    <!-- 
-                    
-                    <p>Ingredients: {{ step.ingredients }}</p>
-                    <br /><br /> -->
+                </div>
+                <div class="col-5 offset-1">
+                    <h4 class="my-4">Diets and intolerances</h4>
+                    <div :class="[{ active: recipe.dairyFree }, 'diet']">
+                        <img
+                            v-if="recipe.dairyFree"
+                            src="../assets/dairy.png"
+                        />
+                        <img v-else src="../assets/dairy-gray.png" />
+                        <span>Dairy free</span>
+                    </div>
+                    <div :class="[{ active: recipe.glutenFree }, 'diet']">
+                        <img
+                            v-if="recipe.glutenFree"
+                            src="../assets/gluten.png"
+                        />
+                        <img v-else src="../assets/gluten-gray.png" />
+                        <span>Gluten free</span>
+                    </div>
+                    <div :class="[{ active: recipe.vegetarian }, 'diet']">
+                        <img
+                            v-if="recipe.vegetarian"
+                            src="../assets/veggie.png"
+                        />
+                        <img v-else src="../assets/veggie-gray.png" />
+                        <span>Vegetarian</span>
+                    </div>
+                    <div :class="[{ active: recipe.vegan }, 'diet']">
+                        <img v-if="recipe.vegan" src="../assets/vegan.png" />
+                        <img v-else src="../assets/vegan-gray.png" />
+                        <span>Vegan</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -165,6 +221,61 @@ export default {
     .picture {
         border-radius: 20px;
         width: 100%;
+    }
+    .diet {
+        border: 1px solid #dadada;
+        width: 160px;
+        margin-bottom: 12px;
+        margin-right: 10px;
+        border-radius: 15px;
+        padding: 6px 10px;
+        display: inline-block;
+        img {
+            height: 35px;
+        }
+        span {
+            color: #dadada;
+            //font-family: 'Poppins';
+            margin-left: 15px;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        &.active {
+            border: 1px solid #ffffff;
+            box-shadow: 0px 0px 3px 0px $pink;
+            color: $purple;
+            img {
+                height: 35px;
+            }
+            span {
+                color: $pink;
+            }
+        }
+    }
+    .instructions {
+        .step {
+            border-left: 1px solid $pink;
+            .number {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                margin-left: -12.5px;
+                background: $pink;
+                color: white;
+                text-align: center;
+            }
+            .information {
+                position: relative;
+                left: 35px;
+                top: -25px;
+            }
+        }
+        &:last-child {
+            .step {
+                border: none;
+            }
+        }
     }
     .numbers {
         display: flex;
