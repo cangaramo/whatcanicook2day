@@ -1,6 +1,11 @@
 <template>
     <div class="pagination mt-5">
-        <button class="changePage" @click="previousPage">
+        <!-- Previous page -->
+        <button
+            class="changePage"
+            @click="previousPage"
+            v-if="current_page != 1"
+        >
             <i class="fas fa-chevron-left"></i>
         </button>
         <button
@@ -11,7 +16,12 @@
         >
             {{ page }}
         </button>
-        <button class="changePage" @click="nextPage">
+        <!-- Next page -->
+        <button
+            class="changePage"
+            @click="nextPage"
+            v-if="current_page != this.total"
+        >
             <i class="fas fa-chevron-right"></i>
         </button>
     </div>
