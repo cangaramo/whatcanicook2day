@@ -150,6 +150,7 @@ export default {
             setTimeout(() => {
                 this.recipes = IngredientsService.getRecipes()
                 this.totalResults = this.recipes.length
+                console.log(this.recipes)
                 this.loaded = true
             }, 700)
         },
@@ -170,9 +171,10 @@ export default {
     },
     created() {
         if (this.query) {
-            //this.findRecipes()
             this.nice_query = this.query.replace(',+', ', ')
+            this.nice_query.replace('%20', ' ')
             this.findRecipes2()
+            //this.findRecipes()
         } else {
             console.log('empty query')
         }
