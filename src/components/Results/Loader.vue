@@ -20,8 +20,8 @@ export default {}
     left: 50%;
     transform: translate(-50%, -50%);
     /*change these sizes to fit into your project*/
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
 }
 .load hr {
     border: 0;

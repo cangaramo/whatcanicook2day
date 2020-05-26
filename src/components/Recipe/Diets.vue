@@ -27,7 +27,11 @@
 </template>
 
 <script>
-export default {}
+export default {
+    props: {
+        recipe: Object
+    }
+}
 </script>
 
 <style lang="scss">

@@ -54,7 +54,7 @@
                 </div>
                 <!-- Diets and intolerances -->
                 <div class="col-5 offset-1">
-                    <Diets></Diets>
+                    <Diets :recipe="recipe"></Diets>
                 </div>
             </div>
         </div>
@@ -101,17 +101,13 @@ export default {
         fetchRecipe() {
             this.recipe = IngredientsService.getRecipe()
             console.log(this.recipe)
-        },
-        capitaLizeLetter(word) {
-            if (typeof word !== 'string') return ''
-            return word.charAt(0).toUpperCase() + word.slice(1)
         }
     },
     created() {
         if (this.id) {
             this.fetchRecipe()
         } else {
-            console.log('empty query')
+            console.log('Error fetching data')
         }
     }
 }
