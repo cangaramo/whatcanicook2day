@@ -8,7 +8,6 @@
         </div>
         <div class="title-results">
             <h1>Recipes</h1>
-            <p class="total">· {{ totalResults }} results</p>
             <p class="showing">Showing recipes with {{ this.nice_query }}</p>
         </div>
         <div v-if="!loaded">
@@ -136,38 +135,32 @@ export default {
         }
     },
     methods: {
-        clearData() {
+        beforeLoad() {
             this.loaded = false
-            this.scrollToTop()
+            window.scrollTo(0, 0)
         },
         updatePage(current_page) {
             this.offset = (current_page - 1) * 10
-            this.clearData()
-            this.loaded = true
-            //this.findRecipes2()
-            //this.findRecipes()
-        },
-        scrollToTop() {
-            window.scrollTo(0, 0)
+            this.beforeLoad()
+            setTimeout(() => {
+                this.loaded = true
+            }, 700)
         },
         findRecipes2() {
             setTimeout(() => {
-                //this.totalResults = IngredientsService.getRecipes().totalResults
-                //this.recipes = IngredientsService.getRecipes().results
                 this.recipes = IngredientsService.getRecipes()
                 this.totalResults = this.recipes.length
-                console.log(this.showRecipes)
                 this.loaded = true
-            }, 1000)
+            }, 700)
         },
         findRecipes() {
-            RecipesService.findByIngredients(this.query, this.offset)
+            RecipesService.findByIngredients(this.query)
                 .then(response => {
-                    this.totalResults = response.data.totalResults
-                    this.recipes = response.data.results
+                    this.recipes = response.data
+                    this.totalResults = this.recipes.length
                     setTimeout(() => {
                         this.loaded = true
-                    }, 500)
+                    }, 400)
                 })
                 .catch(error => {
                     console.log('There was an error ' + error)
@@ -198,16 +191,6 @@ export default {
     margin-top: 30px;
     h1 {
         margin: 0;
-        display: inline-block;
-    }
-    .total {
-        display: inline-block;
-        font-weight: 600;
-        font-size: 20px;
-        margin-bottom: 0;
-        margin-left: 15px;
-        vertical-align: super;
-        color: $pink;
     }
     .showing {
         margin-top: 12px;
