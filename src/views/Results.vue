@@ -22,7 +22,7 @@
                 <!-- Results -->
                 <div class="row">
                     <div
-                        v-for="recipe in recipes"
+                        v-for="recipe in showRecipes"
                         :key="recipe.id"
                         class="col-6 recipe"
                     >
@@ -62,8 +62,9 @@
                                 </p>
                                 <p
                                     class="item-ingredient used"
-                                    v-for="used in recipe.usedIngredients"
-                                    :key="recipe.id + used.id"
+                                    v-for="(used,
+                                    index) in recipe.usedIngredients"
+                                    :key="recipe.id + used.id + index"
                                 >
                                     {{ used.name }}
                                 </p>
@@ -119,12 +120,19 @@ export default {
     computed: {
         getPages() {
             var pages
-            if (this.totalResults % 10) {
+            if (this.totalResults % 10 == 0) {
                 pages = parseInt(this.totalResults / 10)
             } else {
                 pages = parseInt(this.totalResults / 10) + 1
             }
             return pages
+        },
+        showRecipes() {
+            var show_recipes = []
+            if (this.totalResults) {
+                show_recipes = this.recipes.slice(this.offset, this.offset + 10)
+            }
+            return show_recipes
         }
     },
     methods: {
@@ -135,16 +143,20 @@ export default {
         updatePage(current_page) {
             this.offset = (current_page - 1) * 10
             this.clearData()
+            this.loaded = true
             //this.findRecipes2()
-            this.findRecipes()
+            //this.findRecipes()
         },
         scrollToTop() {
             window.scrollTo(0, 0)
         },
         findRecipes2() {
             setTimeout(() => {
-                this.totalResults = IngredientsService.getRecipes().totalResults
-                this.recipes = IngredientsService.getRecipes().results
+                //this.totalResults = IngredientsService.getRecipes().totalResults
+                //this.recipes = IngredientsService.getRecipes().results
+                this.recipes = IngredientsService.getRecipes()
+                this.totalResults = this.recipes.length
+                console.log(this.showRecipes)
                 this.loaded = true
             }, 1000)
         },
@@ -165,9 +177,9 @@ export default {
     },
     created() {
         if (this.query) {
-            this.findRecipes()
+            //this.findRecipes()
             this.nice_query = this.query.replace(',+', ', ')
-            //this.findRecipes2()
+            this.findRecipes2()
         } else {
             console.log('empty query')
         }
