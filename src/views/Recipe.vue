@@ -83,7 +83,10 @@
                         </div>
                     </div>
                     <!-- Equipment -->
-                    <div class="col-5 offset-1">
+                    <div
+                        class="col-5 offset-1"
+                        v-if="recipe.analyzedInstructions[0]"
+                    >
                         <h4 class="my-4">Equipment</h4>
                         <div
                             v-for="equipment in getEquipments"
@@ -112,19 +115,30 @@
                 <!-- Instructions -->
                 <div class="col-6">
                     <h4 class="my-4">Instructions</h4>
-                    <div
-                        class="instructions"
-                        v-for="step in recipe.analyzedInstructions[0].steps"
-                        :key="step.number"
-                    >
-                        <div class="step">
-                            <div class="number">
-                                <p class="mb-0">{{ step.number }}</p>
-                            </div>
-                            <div class="information">
-                                <p class="mb-0">{{ step.step }}</p>
+                    <div v-if="recipe.analyzedInstructions[0]">
+                        <div
+                            class="instructions"
+                            v-for="step in recipe.analyzedInstructions[0].steps"
+                            :key="step.number"
+                        >
+                            <div class="step">
+                                <div class="number">
+                                    <p class="mb-0">{{ step.number }}</p>
+                                </div>
+                                <div class="information">
+                                    <p class="mb-0">{{ step.step }}</p>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div v-else>
+                        <p>Check instructions in the original site</p>
+                        <a
+                            :href="recipe.sourceUrl"
+                            target="_blank"
+                            class="btn mt-1"
+                            >See instructions</a
+                        >
                     </div>
                 </div>
                 <!-- Diets and intolerances -->
