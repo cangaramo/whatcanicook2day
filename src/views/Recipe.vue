@@ -1,6 +1,6 @@
 <template>
     <div class="single-recipe">
-        <div class="container pb-5">
+        <div class="container">
             <div class="breadcrumb">
                 <router-link to="/" class="plain">
                     Home
@@ -10,45 +10,52 @@
                     Recipes
                 </router-link>
             </div>
-            <div class="row">
-                <!-- Title, Numbers and summary -->
-                <div class="col-6">
-                    <h1>{{ recipe.title }}</h1>
-                    <Numbers :recipe="this.recipe"></Numbers>
-                    <h4 class="my-4">Summary</h4>
-                    <div v-html="recipe.summary"></div>
-                </div>
-                <!-- Picture -->
-                <div class="col-5 offset-1">
-                    <img class="picture" :src="recipe.image" />
-                </div>
-            </div>
         </div>
-        <div class="py-4 light-background">
-            <div class="container my-2">
+        <div v-if="!loaded">
+            <Loader></Loader>
+        </div>
+        <div v-show="loaded">
+            <div class="container pb-5">
                 <div class="row">
-                    <!-- Ingredients  -->
+                    <!-- Title, Numbers and summary -->
                     <div class="col-6">
-                        <Ingredients
-                            :ingredients="recipe.extendedIngredients"
-                        ></Ingredients>
+                        <h1>{{ recipe.title }}</h1>
+                        <Numbers :recipe="this.recipe"></Numbers>
+                        <h4 class="my-4">Summary</h4>
+                        <div v-html="recipe.summary"></div>
                     </div>
-                    <!-- Equipment -->
-                    <div class="col-5 offset-1" v-if="getEquipments.length > 0">
-                        <Equipment :equipments="getEquipments"></Equipment>
+                    <!-- Picture -->
+                    <div class="col-5 offset-1">
+                        <img class="picture" :src="recipe.image" />
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <!-- Instructions -->
-                <div class="col-6">
-                    <Instructions :recipe="recipe"></Instructions>
+            <div class="py-4 light-background">
+                <div class="container my-2">
+                    <div class="row">
+                        <!-- Ingredients  -->
+                        <div class="col-6">
+                            <Ingredients
+                                :ingredients="recipe.extendedIngredients"
+                            ></Ingredients>
+                        </div>
+                        <!-- Equipment -->
+                        <div class="col-5 offset-1" v-if="getEquipments.length > 0">
+                            <Equipment :equipments="getEquipments"></Equipment>
+                        </div>
+                    </div>
                 </div>
-                <!-- Diets and intolerances -->
-                <div class="col-5 offset-1">
-                    <Diets :recipe="recipe"></Diets>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <!-- Instructions -->
+                    <div class="col-6">
+                        <Instructions :recipe="recipe"></Instructions>
+                    </div>
+                    <!-- Diets and intolerances -->
+                    <div class="col-5 offset-1">
+                        <Diets :recipe="recipe"></Diets>
+                    </div>
                 </div>
             </div>
         </div>
@@ -63,6 +70,7 @@ import Ingredients from '@/components/Recipe/Ingredients.vue'
 import Instructions from '@/components/Recipe/Instructions.vue'
 import Equipment from '@/components/Recipe/Equipment.vue'
 import Diets from '@/components/Recipe/Diets.vue'
+import Loader from '@/components/Loader'
 
 export default {
     props: {
@@ -70,7 +78,8 @@ export default {
     },
     data() {
         return {
-            recipe: {}
+            recipe: {},
+            loaded: false
         }
     },
     components: {
@@ -78,7 +87,8 @@ export default {
         Ingredients,
         Instructions,
         Equipment,
-        Diets
+        Diets,
+        Loader
     },
     computed: {
         getEquipments() {
@@ -99,19 +109,24 @@ export default {
             RecipesService.getRecipeById(this.id)
                 .then(response => {
                     this.recipe = response.data
+                    this.loaded = true
                     console.log(this.recipe)
                 })
                 .catch(error => {
+                    this.loaded = true
                     console.log('There was an error ' + error)
                 })
         },
         fetchRecipe2() {
-            this.recipe = IngredientsService.getRecipe()
+            setTimeout(() => {
+                this.recipe = IngredientsService.getRecipe()
+                this.loaded = true
+            }, 400)
         }
     },
     created() {
         if (this.id) {
-            this.fetchRecipe()
+            this.fetchRecipe2()
         } else {
             console.log('Error fetching data')
         }
@@ -123,6 +138,7 @@ export default {
 @import '@/sass/variables.scss';
 
 .single-recipe {
+    min-height: 90vh;
     .light-background {
         background: #f3f3f9;
     }
@@ -134,7 +150,6 @@ export default {
         display: flex;
         align-items: center;
         margin: 10px 0;
-
         .name {
             font-weight: 600;
             color: $pink;

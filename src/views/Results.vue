@@ -40,7 +40,7 @@
 import RecipesService from '@/services/RecipesService.js'
 import IngredientsService from '@/services/IngredientsService.js'
 import ResultsPagination from '@/components/Results/ResultsPagination'
-import Loader from '@/components/Results/Loader'
+import Loader from '@/components/Loader'
 import Recipe from '@/components/Results/RecipeCard'
 
 export default {
@@ -134,7 +134,6 @@ export default {
 }
 
 .title-results {
-    margin-top: 30px;
     h1 {
         margin: 0;
     }
