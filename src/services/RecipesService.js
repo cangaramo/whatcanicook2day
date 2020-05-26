@@ -8,6 +8,8 @@ const apiClient = axios.create({
         Accept: 'application/json',
         'Content-Type': 'application/json'
     }
+    //https://api.spoonacular.com/recipes/65597/information?apiKey=d4308995a2ae43578da556983599118e
+
     // old query
     //https://api.spoonacular.com/recipes/findByIngredients?ingredients=apples&apiKey=d4308995a2ae43578da556983599118e
 })
@@ -21,6 +23,11 @@ export default {
                 '&number=50' +
                 '&apiKey=' +
                 apiKey
+        )
+    },
+    getRecipeById(id) {
+        return apiClient.get(
+            '/recipes/' + id + '/information' + '?apiKey=' + apiKey
         )
     }
     // findByIngredients(query, offset) {

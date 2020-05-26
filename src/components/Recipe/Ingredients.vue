@@ -4,7 +4,7 @@
         <div
             v-for="ingredient in ingredients"
             :key="ingredient.id"
-            class="list"
+            class="list-item"
         >
             <div class="img-wrapper">
                 <div

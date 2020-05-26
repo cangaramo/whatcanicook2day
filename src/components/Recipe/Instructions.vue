@@ -20,7 +20,7 @@
         <div v-else>
             <p>Check instructions in the original site</p>
             <a
-                v-if="source"
+                v-if="recipe.sourceUrl"
                 :href="recipe.sourceUrl"
                 target="_blank"
                 class="btn mt-1"
@@ -33,8 +33,16 @@
 <script>
 export default {
     props: {
-        instructions: Object,
-        source: String
+        recipe: {}
+    },
+    computed: {
+        instructions() {
+            var instructions = []
+            if (this.recipe.analyzedInstructions) {
+                instructions = this.recipe.analyzedInstructions[0]
+            }
+            return instructions
+        }
     }
 }
 </script>

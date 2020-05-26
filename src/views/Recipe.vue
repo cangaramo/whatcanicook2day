@@ -27,17 +27,14 @@
         <div class="py-4 light-background">
             <div class="container my-2">
                 <div class="row">
-                    <!-- Ingredients -->
+                    <!-- Ingredients  -->
                     <div class="col-6">
                         <Ingredients
                             :ingredients="recipe.extendedIngredients"
                         ></Ingredients>
                     </div>
                     <!-- Equipment -->
-                    <div
-                        class="col-5 offset-1"
-                        v-if="recipe.analyzedInstructions[0]"
-                    >
+                    <div class="col-5 offset-1" v-if="getEquipments.length > 0">
                         <Equipment :equipments="getEquipments"></Equipment>
                     </div>
                 </div>
@@ -47,10 +44,7 @@
             <div class="row">
                 <!-- Instructions -->
                 <div class="col-6">
-                    <Instructions
-                        :instructions="recipe.analyzedInstructions[0]"
-                        :source="recipe.sourceUrl"
-                    ></Instructions>
+                    <Instructions :recipe="recipe"></Instructions>
                 </div>
                 <!-- Diets and intolerances -->
                 <div class="col-5 offset-1">
@@ -63,6 +57,7 @@
 
 <script>
 import IngredientsService from '@/services/IngredientsService.js'
+import RecipesService from '@/services/RecipesService.js'
 import Numbers from '@/components/Recipe/Numbers.vue'
 import Ingredients from '@/components/Recipe/Ingredients.vue'
 import Instructions from '@/components/Recipe/Instructions.vue'
@@ -87,20 +82,31 @@ export default {
     },
     computed: {
         getEquipments() {
-            const instructions = this.recipe.analyzedInstructions[0]
             var equipments = []
-            instructions.steps.forEach(step => {
-                step.equipment.forEach(equipment => {
-                    equipments.push(equipment)
+            if (this.recipe.analyzedInstructions) {
+                const instructions = this.recipe.analyzedInstructions[0]
+                instructions.steps.forEach(step => {
+                    step.equipment.forEach(equipment => {
+                        equipments.push(equipment)
+                    })
                 })
-            })
+            }
             return equipments
         }
     },
     methods: {
         fetchRecipe() {
+            RecipesService.getRecipeById(this.id)
+                .then(response => {
+                    this.recipe = response.data
+                    console.log(this.recipe)
+                })
+                .catch(error => {
+                    console.log('There was an error ' + error)
+                })
+        },
+        fetchRecipe2() {
             this.recipe = IngredientsService.getRecipe()
-            console.log(this.recipe)
         }
     },
     created() {
@@ -124,7 +130,7 @@ export default {
         border-radius: 20px;
         width: 100%;
     }
-    .list {
+    .list-item {
         display: flex;
         align-items: center;
         margin: 10px 0;
