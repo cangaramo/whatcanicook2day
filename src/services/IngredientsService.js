@@ -1,8 +1,6 @@
 import ingredients from './ingredients.json'
-//import recipes from './recipes-info.json'
-import recipes from './old-recipes2.json'
-
-import single_recipe from './problematic-recipe.json'
+import recipes from './mock/apples.json'
+import single_recipe from './mock/blackberry.json'
 
 export default {
     getIngredients() {
