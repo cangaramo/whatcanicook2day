@@ -20,7 +20,7 @@
         <button
             class="changePage"
             @click="nextPage"
-            v-if="current_page != this.total"
+            v-if="current_page != this.pages"
         >
             <i class="fas fa-chevron-right"></i>
         </button>

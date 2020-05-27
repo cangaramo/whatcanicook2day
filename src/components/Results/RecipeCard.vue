@@ -21,8 +21,8 @@
                 </p>
                 <div
                     class="item-ingredient missing"
-                    v-for="missing in recipe.missedIngredients"
-                    :key="recipe.id + missing.id"
+                    v-for="(missing, index) in recipe.missedIngredients"
+                    :key="recipe.id + missing.id + index"
                 >
                     {{ missing.name }}
                 </div>
@@ -46,8 +46,8 @@
                     </p>
                     <div
                         class="item-ingredient"
-                        v-for="unused in recipe.unusedIngredients"
-                        :key="recipe.id + unused.id"
+                        v-for="(unused, index) in recipe.unusedIngredients"
+                        :key="recipe.id + unused.id + index"
                     >
                         {{ unused.name }}
                     </div>

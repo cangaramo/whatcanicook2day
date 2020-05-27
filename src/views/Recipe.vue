@@ -103,12 +103,14 @@ export default {
         getEquipments() {
             var equipments = []
             if (this.recipe.analyzedInstructions) {
-                const instructions = this.recipe.analyzedInstructions[0]
-                instructions.steps.forEach(step => {
-                    step.equipment.forEach(equipment => {
-                        equipments.push(equipment)
+                if (this.recipe.analyzedInstructions.length > 0) {
+                    const instructions = this.recipe.analyzedInstructions[0]
+                    instructions.steps.forEach(step => {
+                        step.equipment.forEach(equipment => {
+                            equipments.push(equipment)
+                        })
                     })
-                })
+                }
             }
             return equipments
         }
@@ -119,11 +121,10 @@ export default {
                 .then(response => {
                     this.recipe = response.data
                     this.loaded = true
-                    console.log(this.recipe)
                 })
                 .catch(error => {
                     this.loaded = true
-                    console.log('There was an error ' + error)
+                    alert('Error fetching the data. ' + error)
                 })
         },
         fetchRecipe2() {
@@ -135,10 +136,10 @@ export default {
     },
     created() {
         if (this.id) {
-            this.fetchRecipe2()
-            //this.fetchRecipe()
+            //this.fetchRecipe2()
+            this.fetchRecipe()
         } else {
-            console.log('Error fetching data')
+            alert('Error fetching data.')
         }
     }
 }

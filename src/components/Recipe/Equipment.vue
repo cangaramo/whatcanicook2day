@@ -3,8 +3,8 @@
         <h4 class="my-4">Equipment</h4>
         <div class="row">
             <div
-                v-for="equipment in equipments"
-                :key="equipment.id"
+                v-for="(equipment, index) in equipments"
+                :key="equipment.id + index"
                 class="col-md-6 list-item"
             >
                 <div class="img-wrapper">
