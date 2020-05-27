@@ -1,7 +1,7 @@
 <template>
     <div class="footer" style="">
         <h6>What can I cook today?</h6>
-        <p>by Clarisa Angaramo</p>
+        <p>Made with Vue by Clarisa Angaramo 💚</p>
     </div>
 </template>
 

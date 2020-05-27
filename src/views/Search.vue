@@ -33,8 +33,8 @@
                         >
                         </IngredientsGroup>
                         <IngredientsGroup
-                            title="Seafood 🐟"
-                            :group="ingredients.seafood"
+                            title="Fruits 🍐"
+                            :group="ingredients.fruits"
                             @productSelected="selectProduct($event)"
                         >
                         </IngredientsGroup>
@@ -45,7 +45,7 @@
                         >
                         </IngredientsGroup>
                         <IngredientsGroup
-                            title="Legumes"
+                            title="Legumes 🧆"
                             :group="ingredients.legumes"
                             @productSelected="selectProduct($event)"
                         >
@@ -71,8 +71,8 @@
                         >
                         </IngredientsGroup>
                         <IngredientsGroup
-                            title="Fruits 🍐"
-                            :group="ingredients.fruits"
+                            title="Seafood 🐟"
+                            :group="ingredients.seafood"
                             @productSelected="selectProduct($event)"
                         >
                         </IngredientsGroup>

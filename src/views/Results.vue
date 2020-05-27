@@ -109,7 +109,7 @@ export default {
                     }, 400)
                 })
                 .catch(error => {
-                    console.log('There was an error ' + error)
+                    alert('Error fetching the data. ' + error)
                     this.loaded = true
                 })
         }
@@ -119,10 +119,10 @@ export default {
             var res = this.query.split('+')
             this.nice_query = res.join(' ')
             this.nice_query.replace('%20', ' ')
-            this.findRecipes2()
-            //this.findRecipes()
+            //this.findRecipes2()
+            this.findRecipes()
         } else {
-            console.log('empty query')
+            alert('Error fetching the data.')
         }
     }
 }
