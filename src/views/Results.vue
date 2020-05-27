@@ -1,8 +1,8 @@
 <template>
     <div class="container results">
         <div class="breadcrumb">
-            <router-link to="/">
-                <i class="fas fa-arrow-left mr-1"></i>
+            <i class="fas fa-arrow-left mr-2 mt-1"></i>
+            <router-link to="/" class="plain">
                 Home
             </router-link>
         </div>
@@ -24,6 +24,7 @@
                         v-for="recipe in showRecipes"
                         :key="recipe.id"
                         :recipe="recipe"
+                        :query="query"
                     ></Recipe>
                 </div>
                 <!-- Pagination -->

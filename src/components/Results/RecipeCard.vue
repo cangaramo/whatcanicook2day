@@ -1,20 +1,20 @@
 <template>
-    <div class="col-6 recipe">
+    <div class="col-md-6 recipe">
         <h5>{{ recipe.title }}</h5>
         <div class="row mt-3">
-            <div class="col-5">
+            <div class="col-sm-5">
                 <img class="picture" :src="recipe.image" />
                 <router-link
                     tag="button"
-                    class="btn"
+                    class="btn d-none d-sm-block"
                     :to="{
                         name: 'Recipe',
-                        params: { id: recipe.id.toString() }
+                        params: { id: recipe.id.toString(), query: this.query }
                     }"
                     >Read more</router-link
                 >
             </div>
-            <div class="col-7">
+            <div class="col-sm-7 mt-4 mt-sm-0">
                 <!-- Missing ingredients -->
                 <p class="subtitle">
                     <i class="fas fa-exclamation missed mr-2"></i>
@@ -51,6 +51,15 @@
                 >
                     {{ unused.name }}
                 </div>
+                <router-link
+                    tag="button"
+                    class="btn d-sm-none"
+                    :to="{
+                        name: 'Recipe',
+                        params: { id: recipe.id.toString(), query: this.query }
+                    }"
+                    >Read more</router-link
+                >
             </div>
         </div>
     </div>
@@ -59,7 +68,8 @@
 <script>
 export default {
     props: {
-        recipe: {}
+        recipe: {},
+        query: String
     }
 }
 </script>

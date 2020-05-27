@@ -1,20 +1,20 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-3 pr-0">
+            <div class="col-md-3 pr-md-0">
                 <h1 class="mb-3">What can I cook today?</h1>
                 <p>
                     Select ingredients from different categories and find
                     recipes based on what's in your fridge.
                 </p>
-                <button class="btn" @click="goToResults">
+                <button class="btn d-none d-md-block" @click="goToResults">
                     Find recipe
                 </button>
             </div>
             <!-- Ingredients selection -->
-            <div class="col-8 offset-1 pl-0">
+            <div class="col-md-8 offset-md-1 pl-md-0">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-md-6 mt-4 mt-md-0">
                         <IngredientsGroup
                             title="Dairy 🥛"
                             :group="ingredients.dairy"
@@ -52,7 +52,7 @@
                         >
                         </IngredientsGroup>
                     </div>
-                    <div class="col-6">
+                    <div class="col-md-6 mt-4 mt-md-0">
                         <IngredientsGroup
                             title="Vegetables 🥦"
                             :group="ingredients.vegetables"
@@ -92,6 +92,9 @@
                     </div>
                 </div>
             </div>
+            <button class="btn ml-3 mt-4 d-md-none" @click="goToResults">
+                Find recipe
+            </button>
         </div>
         <br /><br />
     </div>
