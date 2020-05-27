@@ -40,26 +40,30 @@
                     {{ used.name }}
                 </p>
                 <!-- Unused ingredients -->
-                <p class="subtitle">
-                    <i class="fas fa-times mr-2"></i>
-                    Unused ingredients
-                </p>
-                <div
-                    class="item-ingredient"
-                    v-for="unused in recipe.unusedIngredients"
-                    :key="recipe.id + unused.id"
-                >
-                    {{ unused.name }}
+                <div v-if="recipe.unusedIngredients.length > 1">
+                    <p class="subtitle">
+                        <i class="fas fa-times mr-2"></i>
+                        Unused ingredients
+                    </p>
+                    <div
+                        class="item-ingredient"
+                        v-for="unused in recipe.unusedIngredients"
+                        :key="recipe.id + unused.id"
+                    >
+                        {{ unused.name }}
+                    </div>
                 </div>
-                <router-link
-                    tag="button"
-                    class="btn d-sm-none"
-                    :to="{
-                        name: 'Recipe',
-                        params: { id: recipe.id.toString(), query: this.query }
-                    }"
-                    >Read more</router-link
-                >
+                <div>
+                    <router-link
+                        tag="button"
+                        class="btn d-sm-none"
+                        :to="{
+                            name: 'Recipe',
+                            params: { id: recipe.id.toString(), query: this.query }
+                        }"
+                        >Read more</router-link
+                    >
+                </div>
             </div>
         </div>
     </div>

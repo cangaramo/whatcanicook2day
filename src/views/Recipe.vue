@@ -5,13 +5,15 @@
                 <router-link to="/" class="plain">
                     Home
                 </router-link>
-                <i class="mx-2 px-1 mt-1 fas fa-arrow-left"></i>
-                <router-link
-                    :to="{ name: 'Results', params: { query: query } }"
-                    class="plain"
-                >
-                    Recipes
-                </router-link>
+                <div v-if="query">
+                    <i class="mx-2 px-1 mt-1 fas fa-arrow-left"></i>
+                    <router-link
+                        :to="{ name: 'Results', params: { query: query } }"
+                        class="plain"
+                    >
+                        Recipes
+                    </router-link>
+                </div>
             </div>
         </div>
         <div v-if="!loaded">

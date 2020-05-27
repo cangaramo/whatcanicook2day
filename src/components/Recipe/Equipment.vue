@@ -5,7 +5,7 @@
             <div
                 v-for="equipment in equipments"
                 :key="equipment.id"
-                class="col-6 list-item"
+                class="col-md-6 list-item"
             >
                 <div class="img-wrapper">
                     <div
