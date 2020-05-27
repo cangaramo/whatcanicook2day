@@ -7,9 +7,14 @@
                     Select ingredients from different categories and find
                     recipes based on what's in your fridge.
                 </p>
-                <button class="btn d-none d-md-block" @click="goToResults">
-                    Find recipe
-                </button>
+                <div class="d-none d-md-block">
+                    <p v-if="error" class="error">
+                        At least one product is required
+                    </p>
+                    <button class="btn" @click="goToResults">
+                        Find recipe
+                    </button>
+                </div>
             </div>
             <!-- Ingredients selection -->
             <div class="col-md-8 offset-md-1 pl-md-0">
@@ -92,9 +97,14 @@
                     </div>
                 </div>
             </div>
-            <button class="btn ml-3 mt-4 d-md-none" @click="goToResults">
-                Find recipe
-            </button>
+            <div class="d-md-none">
+                <p v-if="error" class="error">
+                    At least one product is required
+                </p>
+                <button class="btn ml-3 mt-4" @click="goToResults">
+                    Find recipe
+                </button>
+            </div>
         </div>
         <br /><br />
     </div>
@@ -108,7 +118,8 @@ export default {
     data() {
         return {
             ingredients: {},
-            selected_products: []
+            selected_products: [],
+            error: false
         }
     },
     created() {
@@ -130,14 +141,23 @@ export default {
                 // Remove
                 this.selected_products.splice(pos, 1)
             }
-            console.log(this.selected_products)
         },
         goToResults() {
-            const query = this.selected_products.join(',+')
-            this.$router.push({ name: 'Results', params: { query: query } })
+            if (this.selected_products.length > 0) {
+                const query = this.selected_products.join(',+')
+                this.$router.push({ name: 'Results', params: { query: query } })
+            } else {
+                this.error = true
+            }
         }
     }
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@import '@/sass/variables.scss';
+
+.error {
+    color: $error;
+}
+</style>

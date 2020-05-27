@@ -1,18 +1,17 @@
 <template>
     <div class="col-md-6 recipe">
-        <h5>{{ recipe.title }}</h5>
+        <div class="title-wrapper">
+            <h5>{{ recipe.title }}</h5>
+            <div class="line"></div>
+        </div>
         <div class="row mt-3">
             <div class="col-sm-5">
-                <img class="picture" :src="recipe.image" />
-                <router-link
-                    tag="button"
-                    class="btn d-none d-sm-block"
-                    :to="{
-                        name: 'Recipe',
-                        params: { id: recipe.id.toString(), query: this.query }
-                    }"
-                    >Read more</router-link
-                >
+                <div class="picture-wrapper" @click="goToRecipe">
+                    <img class="picture" :src="recipe.image" />
+                </div>
+                <button class="btn d-none d-sm-block" @click="goToRecipe">
+                    Read more
+                </button>
             </div>
             <div class="col-sm-7 mt-4 mt-sm-0">
                 <!-- Missing ingredients -->
@@ -54,15 +53,9 @@
                     </div>
                 </div>
                 <div>
-                    <router-link
-                        tag="button"
-                        class="btn d-sm-none"
-                        :to="{
-                            name: 'Recipe',
-                            params: { id: recipe.id.toString(), query: this.query }
-                        }"
-                        >Read more</router-link
-                    >
+                    <button class="btn d-sm-none" @click="goToRecipe">
+                        Read more
+                    </button>
                 </div>
             </div>
         </div>
@@ -74,6 +67,14 @@ export default {
     props: {
         recipe: {},
         query: String
+    },
+    methods: {
+        goToRecipe() {
+            this.$router.push({
+                name: 'Recipe',
+                params: { id: this.recipe.id.toString(), query: this.query }
+            })
+        }
     }
 }
 </script>
@@ -84,6 +85,27 @@ export default {
 .recipe {
     position: relative;
     margin: 30px 0;
+    .title-wrapper {
+        width: fit-content;
+        cursor: pointer;
+        h5 {
+            margin-bottom: 3px;
+        }
+        .line {
+            height: 3px;
+            width: 0px;
+            background: $pink;
+            opacity: 0;
+            transition: opacity 0.8s, width 0.8s;
+        }
+        &:hover {
+            .line {
+                opacity: 1;
+                width: 100%;
+                transition: opacity 0.8s, width 0.8s;
+            }
+        }
+    }
 
     .btn {
         margin-top: 20px;
@@ -104,9 +126,19 @@ export default {
             color: $error;
         }
     }
-    .picture {
+    .picture-wrapper {
+        overflow: hidden;
         border-radius: 20px;
-        width: 100%;
+        .picture {
+            width: 100%;
+            cursor: pointer;
+            transform: scale(1);
+            transition: transform 0.4s;
+            &:hover {
+                transform: scale(1.12) rotateZ(4deg);
+                transition: transform 0.4s;
+            }
+        }
     }
     .item-ingredient {
         display: inline-block;

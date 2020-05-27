@@ -116,7 +116,8 @@ export default {
     },
     created() {
         if (this.query) {
-            this.nice_query = this.query.replace(',+', ', ')
+            var res = this.query.split('+')
+            this.nice_query = res.join(' ')
             this.nice_query.replace('%20', ' ')
             this.findRecipes2()
             //this.findRecipes()

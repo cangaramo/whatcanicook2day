@@ -5,24 +5,22 @@ main {
     padding: 50px 0 30px 0;
 }
 
+//Container
 @media (min-width: 576px){
     .container, .container-sm {
         max-width: 610px;
     }
 }
-
 @media (min-width: 768px){
     .container, .container-md, .container-sm {
         max-width: 800px;
     }
 }
-
 @media (min-width: 992px){
     .container, .container-lg, .container-md, .container-sm {
         max-width: 1020px;
     }
 }
-
 @media (min-width: 1200px) {
     .container,
     .container-lg,
@@ -93,6 +91,7 @@ a {
 
     &:hover {
         color: white;
-        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        box-shadow: 0px 0px 5px 1px #5167f1;
+        transition: box-shadow 0.3s;
     }
 }
