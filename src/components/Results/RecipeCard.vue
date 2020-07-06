@@ -2,7 +2,6 @@
     <div class="col-md-6 recipe">
         <div class="title-wrapper">
             <h5>{{ recipe.title }}</h5>
-            <div class="line"></div>
         </div>
         <div class="row mt-3">
             <div class="col-sm-5">
@@ -90,20 +89,6 @@ export default {
         cursor: pointer;
         h5 {
             margin-bottom: 3px;
-        }
-        .line {
-            height: 3px;
-            width: 0px;
-            background: $pink;
-            opacity: 0;
-            transition: opacity 0.8s, width 0.8s;
-        }
-        &:hover {
-            .line {
-                opacity: 1;
-                width: 100%;
-                transition: opacity 0.8s, width 0.8s;
-            }
         }
     }
 
